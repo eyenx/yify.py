@@ -133,7 +133,7 @@ def main():
       else:
         error("you must define a command")
   # config
-  command="/home/eye/bin/magnet-remote.sh"
+  command=""
   try: 
     browser=os.environ["BROWSER"]
   except KeyError:
