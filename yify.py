@@ -75,7 +75,7 @@ def output(movies):
 def userinput(r):
   inp=input("Add Torrent with respective number: ")
   try: 
-    if int(inp) not in range(int(r)):
+    if int(inp) not in range(int(r)+1):
       error("Your choice was invalid")
     else:
       return int(inp)
@@ -147,7 +147,7 @@ def main():
   except urllib.request.URLError:
     error("there was an error contacting the service")
   output(ysearch.jsondict) # call output function with json dict/array of yify class
-  toradd(command,ysearch.jsondict['MovieList'][userinput(ysearch.jsondict['MovieCount'])]['TorrentMagnetUrl'])
+  toradd(command,ysearch.jsondict['MovieList'][userinput(ysearch.jsondict['MovieCount'])-1]['TorrentMagnetUrl'])
 
 
 class yify():
