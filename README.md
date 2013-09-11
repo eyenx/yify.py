@@ -25,6 +25,8 @@ yify.py <options> <search string>
   -a, --autoadd:     automatically add every single search result through your command.
   
   -c, --command:     change your chosen default command to add the magnet links
+  
+  -t, --torrenturl:  use torrent url instead of magnet link
 
   Invalid input will try to search with default values.
 
