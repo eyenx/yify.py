@@ -26,6 +26,7 @@ def usage(msg=""):
   -o, --order:       order ascending or descending (asc/desc). 
   -a, --autoadd:     automatically add every single search result through your command.   
   -c, --command:     change your chosen default command to add the magnet links
+  -t, --torrenturl:  use torrent url instead of magnet link
 
   Invalid input will try to search with default values.
   
@@ -41,9 +42,9 @@ def error(msg):
 # getopt parser
 def optparser():
   try:
-    par,args=getopt.getopt(sys.argv[1:],"l:q:r:k:g:s:o:ac:",["limit=","quality=","rating=","keywords=","genre=","sort=","order=","autoadd","command="])
+    par,args=getopt.getopt(sys.argv[1:],"l:q:r:k:g:s:o:tac:",["torrenturl","limit=","quality=","rating=","keywords=","genre=","sort=","order=","autoadd","command="])
     return(par,args)
-  except(getopt.GetoptError,opterr):
+  except getopt.GetoptError as opterr:
     usage(str(opterr))
 
 # output function with colors
@@ -82,9 +83,9 @@ def userinput(r):
   except ValueError:
     error("There was an error in your input")
 
-def toradd(com,magnet):
+def toradd(com,arg):
   comls=com.split()
-  comls.append(magnet)
+  comls.append(arg)
   subprocess.Popen(comls)
 # change the config
 def config(c):
@@ -115,6 +116,8 @@ def main():
   for p,a in opts: # parsing options + values
     if p in ["-a","--autoadd"]:
       autoadd=1 # autoaddoptionflag
+    if p in ["-t","--torrenturl"]:
+      torurl=1 # torrenturlflag
     if p in ["-l","--limit"]:
       ysearch.set_limit(a)
     if p in ["-q","--quality"]:
@@ -147,7 +150,12 @@ def main():
   except urllib.request.URLError:
     error("there was an error contacting the service")
   output(ysearch.jsondict) # call output function with json dict/array of yify class
-  toradd(command,ysearch.jsondict['MovieList'][userinput(ysearch.jsondict['MovieCount'])-1]['TorrentMagnetUrl'])
+  try:
+    torurl
+    dictkey="TorrentUrl"
+  except NameError:
+    dictkey="TorrentMagnetUrl"
+  toradd(command,ysearch.jsondict['MovieList'][userinput(ysearch.jsondict['MovieCount'])-1][dictkey])
 
 
 class yify():
