@@ -107,9 +107,9 @@ def main():
   # get options
   opts,args=optparser()
   if len(args)!=0: # if search string given
-    ysearch=yify(keywords=args)  # create class with keywords
+    ysearch=Yify(keywords=args)  # create class with keywords
   elif len(opts)>0:  # if no search string given, but options there, create class with no keywords (default) 
-    ysearch=yify()
+    ysearch=Yify()
   else:
     usage("please input some options or arguments") # else, usage
 
@@ -158,7 +158,7 @@ def main():
   toradd(command,ysearch.jsondict['MovieList'][userinput(ysearch.jsondict['MovieCount'])-1][dictkey])
 
 
-class yify():
+class Yify():
 
   # some constants
 
