@@ -1,10 +1,10 @@
 #!/usr/bin/python
-#               _  __                     
-#         _   _(_)/ _|_   _   _ __  _   _ 
+#               _  __
+#         _   _(_)/ _|_   _   _ __  _   _
 #        | | | | | |_| | | | | '_ \| | | |
 #        | |_| | |  _| |_| |_| |_) | |_| |
 #         \__, |_|_|  \__, (_) .__/ \__, |
-#         |___/       |___/  |_|    |___/ 
+#         |___/       |___/  |_|    |___/
 #
 #
 # Search and add magnet links directly from the api list-movies method of http://yify-torrents.com/
@@ -17,24 +17,24 @@ def usage(msg=""):
   yify.py <options> <search string>
 
   options:
-  
+
   -l, --limit:       limit the max amount of movie results (integer 1-50)
-  -q, --quality:     choose between 720p, 1080p or 3D. 
+  -q, --quality:     choose between 720p, 1080p or 3D.
   -r, --rating:      sets minimum imd rating (integer 1-10)
-  -g, --genre:       genre see http://www.imdb.com/genre/ for full list. 
+  -g, --genre:       genre see http://www.imdb.com/genre/ for full list.
   -s, --sort:        sort result by date, seeds, peers, size, alphabet, rating, downloaded.
-  -o, --order:       order ascending or descending (asc/desc). 
-  -a, --autoadd:     automatically add every single search result through your command.   
+  -o, --order:       order ascending or descending (asc/desc).
+  -a, --autoadd:     automatically add every single search result through your command.
   -c, --command:     change your chosen default command to add the magnet links
   -t, --torrenturl:  use torrent url instead of magnet link
 
   Invalid input will try to search with default values.
-  
+
   """)
 
   error(msg)
 
-# random error function, just used for errors 
+# random error function, just used for errors
 def error(msg):
   print(msg);
   sys.exit(1)
@@ -75,7 +75,7 @@ def output(movies):
 
 def userinput(r):
   inp=input("Add Torrent with respective number: ")
-  try: 
+  try:
     if int(inp) not in range(int(r)+1):
       error("Your choice was invalid")
     else:
@@ -102,61 +102,6 @@ def config(c):
   sys.exit("command variable was changed to: "+c+"\nWill now exit")
 
 
-# main function
-def main():
-  # get options
-  opts,args=optparser()
-  if len(args)!=0: # if search string given
-    ysearch=Yify(keywords=args)  # create class with keywords
-  elif len(opts)>0:  # if no search string given, but options there, create class with no keywords (default) 
-    ysearch=Yify()
-  else:
-    usage("please input some options or arguments") # else, usage
-
-  for p,a in opts: # parsing options + values
-    if p in ["-a","--autoadd"]:
-      autoadd=1 # autoaddoptionflag
-    if p in ["-t","--torrenturl"]:
-      torurl=1 # torrenturlflag
-    if p in ["-l","--limit"]:
-      ysearch.set_limit(a)
-    if p in ["-q","--quality"]:
-      ysearch.set_quality(a)
-    if p in ["-r","--rating"]:
-      ysearch.set_rating(a)
-    if p in ["-g","--genre"]:
-      ysearch.set_genre(a)
-    if p in ["-s","--sort"]:
-      ysearch.set_sort(a)
-    if p in ["-o","--order"]:
-      ysearch.set_order(a)
-    if p in ["-c","--command"]:
-      if a:
-        config(a)
-      else:
-        error("you must define a command")
-  # config
-  command=""
-  try: 
-    browser=os.environ["BROWSER"]
-  except KeyError:
-    error("Please define your environment variable $BROWSER first")
-
-  command or usage("please first set your command and browser values") # exit if no command or browser
-
-  ysearch.createparam() # create params list
-  try:
-    ysearch.request(ysearch.params)  # try the request or die
-  except urllib.request.URLError:
-    error("there was an error contacting the service")
-  output(ysearch.jsondict) # call output function with json dict/array of yify class
-  try:
-    torurl
-    dictkey="TorrentUrl"
-  except NameError:
-    dictkey="TorrentMagnetUrl"
-  toradd(command,ysearch.jsondict['MovieList'][userinput(ysearch.jsondict['MovieCount'])-1][dictkey])
-
 
 class Yify():
 
@@ -166,11 +111,11 @@ class Yify():
 
   qualities=["720p","1080p","3D","ALL"]
   genres=["action","adventure","animation","biography","comedy","crime","documentary","drama","family","fantasy","film-noir","history","horror","music","musical","mystery","romance","sci-fi","short","sport","thriller","war","western"]
-  ratings=range(11) 
+  ratings=range(11)
   limits=range(51)
   sorts=["date","seeds","peers","size","alphabet","rating","downloaded"]
   orders=["desc","asc"]
-  
+
   def __init__(self,limit=15,quality="ALL",rating=0,genre="ALL",sort="seeds",order="desc",keywords=""):
     # set defaults (could be done better)
     self.set_limit(limit)
@@ -204,7 +149,7 @@ class Yify():
   def set_sort(self,sort):
     if sort in self.sorts:
       self.sort=sort
-    else: 
+    else:
       self.sort="seeds"
   def set_order(self,order):
     if order in  self.orders:
@@ -230,5 +175,60 @@ class Yify():
     resp=req.read().decode() # read, decode and json.load it
     self.jsondict=json.loads(resp)
 
+
+
+
+# main function
 if __name__=='__main__':
-  main()
+  # get options
+  opts,args=optparser()
+  if len(args)!=0: # if search string given
+    ysearch=Yify(keywords=args)  # create class with keywords
+  elif len(opts)>0:  # if no search string given, but options there, create class with no keywords (default)
+    ysearch=Yify()
+  else:
+    usage("please input some options or arguments") # else, usage
+
+  for p,a in opts: # parsing options + values
+    if p in ["-a","--autoadd"]:
+      autoadd=1 # autoaddoptionflag
+    if p in ["-t","--torrenturl"]:
+      torurl=1 # torrenturlflag
+    if p in ["-l","--limit"]:
+      ysearch.set_limit(a)
+    if p in ["-q","--quality"]:
+      ysearch.set_quality(a)
+    if p in ["-r","--rating"]:
+      ysearch.set_rating(a)
+    if p in ["-g","--genre"]:
+      ysearch.set_genre(a)
+    if p in ["-s","--sort"]:
+      ysearch.set_sort(a)
+    if p in ["-o","--order"]:
+      ysearch.set_order(a)
+    if p in ["-c","--command"]:
+      if a:
+        config(a)
+      else:
+        error("you must define a command")
+  # config
+  command=""
+  try:
+    browser=os.environ["BROWSER"]
+  except KeyError:
+    error("Please define your environment variable $BROWSER first")
+
+  command or usage("please first set your command and browser values") # exit if no command or browser
+
+  ysearch.createparam() # create params list
+  try:
+    ysearch.request(ysearch.params)  # try the request or die
+  except urllib.request.URLError:
+    error("there was an error contacting the service")
+  output(ysearch.jsondict) # call output function with json dict/array of yify class
+  try:
+    torurl
+    dictkey="TorrentUrl"
+  except NameError:
+    dictkey="TorrentMagnetUrl"
+  toradd(command,ysearch.jsondict['MovieList'][userinput(ysearch.jsondict['MovieCount'])-1][dictkey])
