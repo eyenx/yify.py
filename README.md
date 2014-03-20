@@ -73,29 +73,29 @@ Raspbian Instructions:
 
 > Now make sure You remove any nodejs/npm packages already installed.
 
-sudo apt-get purge nodejs
+`sudo apt-get purge nodejs`
 
-sudo apt-get purge npm
+`sudo apt-get purge npm`
 
 > Now Install Node js using the command below( Thanks to midnightcodr on github)
 
-curl -L https://raw.github.com/midnightcodr/rpi_node_install/master/setup.sh | bash -s 0.10.24
+`curl -L https://raw.github.com/midnightcodr/rpi_node_install/master/setup.sh | bash -s 0.10.24`
 
 > Note that you can invoke node with command node and *not* nodejs, so the edit in the peerflix nodejs script is not required.
 
 > Once node is installed , Install npm
 
-sudo apt-get install npm
+`sudo apt-get install npm`
 
 > Then do a global install of peerflix.
 
-sudo npm install peerflix -g
+`sudo npm install peerflix -g`
 
 > Now you can use yify script 
 
-sudo BROWSER=ddd python3 yify.py -c peerflix
+`sudo BROWSER=ddd python3 yify.py -c peerflix`
 
-sudo BROWSER=ddd python3 yify.py -t "wolf of wallstreet"
+`sudo BROWSER=ddd python3 yify.py -t "wolf of wallstreet"`
 
 usage:
 ------ 
