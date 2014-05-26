@@ -38,7 +38,7 @@ TODO:
 - Add autoadd-all functionality
 
 
-How to watch yify movies on Chromecast with yify.py
+Watch yify movies on Chromecast
 -----------
 
 Use peerflix + the dabble site to watch yify movies on your Chromecast
