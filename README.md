@@ -100,8 +100,6 @@ Note to stop peerflix you have to run
 
 in a terminal window.
 
-I'll try to clean up this guide later. Just wanted to get my thoughts down for anybody that may want to try this.
-
 Windows instructions http://www.reddit.com/r/Chromecast/comments/1x992z/use_peerflix_the_dabble_site_to_watch_yify_movies/cf9tokp
 
 Raspbian Instructions:
