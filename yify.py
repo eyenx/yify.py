@@ -213,12 +213,7 @@ if __name__=='__main__':
         error("you must define a command")
   # config
   command=""
-  try:
-    browser=os.environ["BROWSER"]
-  except KeyError:
-    error("Please define your environment variable $BROWSER first")
-
-  command or usage("please first set your command and browser values") # exit if no command or browser
+  command or usage("please set your command first")
 
   ysearch.createparam() # create params list
   try:
