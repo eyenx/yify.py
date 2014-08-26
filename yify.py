@@ -9,7 +9,15 @@
 #
 # Search and add magnet links directly from the api list-movies method of http://yify-torrents.com/
 
-import sys,subprocess,json,urllib.request,getopt,os,re
+import sys,subprocess,json,getopt,os,re
+try:
+    from urllib import request as request_module
+    from urllib.request import URLError
+except ImportError:
+#    print("Couldn't find urllib.Request, will use urllib2")
+    import urllib2 as request_module
+    from urllib2 import URLError
+
 
 def usage(msg=""):
   print("""usage:
@@ -173,8 +181,8 @@ class Yify():
     self.params.append("keywords="+self.keywords)
 
   def request(self,params):
-    prereq=urllib.request.Request(self.url+"?"+"&".join(params)) # join param array with "&"
-    req=urllib.request.urlopen(prereq)  # get list
+    prereq=request_module.Request(self.url+"?"+"&".join(params)) # join param array with "&"
+    req=request_module.urlopen(prereq)  # get list
     resp=req.read().decode() # read, decode and json.load it
     self.jsondict=json.loads(resp)
 
@@ -221,7 +229,7 @@ if __name__=='__main__':
   ysearch.createparam() # create params list
   try:
     ysearch.request(ysearch.params)  # try the request or die
-  except urllib.request.URLError:
+  except URLError:
     error("there was an error contacting the service")
   output(ysearch.jsondict) # call output function with json dict/array of yify class
   try:
