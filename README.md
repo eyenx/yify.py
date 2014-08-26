@@ -34,7 +34,6 @@ yify.py <options> <search string>
 TODO:
 -----
 
-- Add Browser functionality
 - Add autoadd-all functionality
 
 
