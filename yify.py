@@ -57,21 +57,24 @@ def output(movies):
   turk="\033[1;36m"
   norm="\033[0m"
   sep=norm+" | "
-  i=1
   # if dict then
   if type(movies) is dict:
     if 'error' in movies.keys():
-        error(red+movies['error'])
+      error(red+movies['error']+norm)
     elif 'MovieList' in movies.keys():
-      for movie in movies['MovieList']:
-        print(purple+str(i)+sep+yellow+movie["MovieTitle"]+sep+green+movie["TorrentSeeds"]+sep+red+movie["TorrentPeers"]+sep+blue+movie["Size"]+sep+turk+movie["Quality"]+norm)
-        i+=1
+      for i,movie in enumerate(movies['MovieList']):
+        print(purple + str(i+1) + sep
+                + yellow + movie["MovieTitle"] + sep
+                + green + movie["TorrentSeeds"] + sep
+                + red + movie["TorrentPeers"] + sep
+                + blue + movie["Size"] + sep
+                + turk + movie["Quality"] + norm)
   # else just output some random error
     else:
-      error(red+"There was some sort of other error")
+      error(red+"There was some sort of other error"+norm)
   # else just output some random error
   else:
-    error(red+"There was some sort of other error")
+    error(red+"There was some sort of other error"+norm)
 
 def userinput(r):
   inp=input("Add Torrent with respective number: ")
