@@ -118,7 +118,7 @@ class Yify():
 
   # some constants
 
-  url="http://yify-torrents.com/api/list.json"
+  url="http://yts.to/api/list.json"
 
   qualities=["720p","1080p","3D","ALL"]
   genres=["action","adventure","animation","biography","comedy","crime","documentary","drama","family","fantasy","film-noir","history","horror","music","musical","mystery","romance","sci-fi","short","sport","thriller","war","western"]
