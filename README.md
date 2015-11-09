@@ -1,3 +1,8 @@
+# RIP 
+
+[YIFY/YTS shut down.](https://torrentfreak.com/yify-yts-shuts-down-the-end-of-a-piracy-icon-151030/) Yify.py won't work anymore.
+
+
 yify.py
 =======
 
